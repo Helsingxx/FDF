@@ -6,7 +6,7 @@
 /*   By: eamrati <eamrati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 19:59:50 by eamrati           #+#    #+#             */
-/*   Updated: 2023/05/21 20:08:54 by eamrati          ###   ########.fr       */
+/*   Updated: 2023/05/23 16:19:39 by eamrati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	tracelinex(t_mlx *mlx_var, t_imgmanip *imgmanip, int x, int y)
 	coords.divy = coords.y_diff / coords.x_diff;
 	while (coords.x_diff > 0 || coords.y_diff > 0)
 	{
-		mlx_put_image_to_window(mlx_var->mlx, mlx_var->mlx_window,
-			imgmanip->img, (int)(W_BEGIN + (x * W_SPRITE * mlx_var->coef)
+		img_draw(mlx_var, imgmanip, (int)(W_BEGIN
+				+ (x * W_SPRITE * mlx_var->coef)
 				- (y * W_SPRITE * mlx_var->coef)) + coords.x_diff,
 			(int)(H_BEGIN + (x * H_SPRITE * mlx_var->coef)
 				+ (y * H_SPRITE * mlx_var->coef)) + coords.y_diff);
@@ -97,8 +97,8 @@ void	traceliney(t_mlx *mlx_var, t_imgmanip *imgmanip, int x, int y)
 	coords.divy = -(coords.y_diff / coords.x_diff);
 	while (coords.xcount < coords.x_diff || coords.ycount > coords.y_diff)
 	{
-		mlx_put_image_to_window(mlx_var->mlx, mlx_var->mlx_window,
-			imgmanip->img, (int)(W_BEGIN + (x * W_SPRITE * mlx_var->coef)
+		img_draw(mlx_var, imgmanip, (int)(W_BEGIN
+				+ (x * W_SPRITE * mlx_var->coef)
 				- ((y + 1) * W_SPRITE * mlx_var->coef)) + coords.xcount,
 			(int)(H_BEGIN + (x * H_SPRITE * mlx_var->coef)
 				+ ((y + 1) * H_SPRITE * mlx_var->coef)) + coords.ycount);
@@ -122,8 +122,7 @@ void	trace_it(t_mlx *mlx_var, t_imgmanip *imgmanip, float x, float y)
 	increment_y = (float) imgmanip->coordsy_diff / (float) steps;
 	while (ecx <= steps)
 	{
-		mlx_put_image_to_window(mlx_var->mlx,
-			mlx_var->mlx_window, imgmanip->img, round(x), round(y));
+		img_draw(mlx_var, imgmanip, round(x), round(y));
 		x += increment_x;
 		y += increment_y;
 		ecx++;

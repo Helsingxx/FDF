@@ -6,7 +6,7 @@
 /*   By: eamrati <eamrati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:10:35 by eamrati           #+#    #+#             */
-/*   Updated: 2023/05/21 22:58:22 by eamrati          ###   ########.fr       */
+/*   Updated: 2023/05/23 16:23:35 by eamrati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ void	put_the_shit(t_mlx *mlx_var, t_imgmanip *imgmanip, int x, int y)
 {	
 	if (imgmanip->buffercasted[y][x].val == 0)
 	{
-		mlx_put_image_to_window(mlx_var->mlx,
-			mlx_var->mlx_window, imgmanip->img,
-			(int)(W_BEGIN + (x * W_SPRITE * mlx_var->coef)
+		img_draw(mlx_var, imgmanip, (int)(W_BEGIN
+				+ (x * W_SPRITE * mlx_var->coef)
 				- (y * W_SPRITE * mlx_var->coef)),
 			(int)(H_BEGIN + (x * H_SPRITE * mlx_var->coef)
 				+ (y * H_SPRITE * mlx_var->coef)));
@@ -31,8 +30,8 @@ void	put_the_shit(t_mlx *mlx_var, t_imgmanip *imgmanip, int x, int y)
 	}
 	if (imgmanip->buffercasted[y][x].val != 0)
 	{	
-		mlx_put_image_to_window(mlx_var->mlx, mlx_var->mlx_window,
-			imgmanip->img, (int)(W_BEGIN + (x * W_SPRITE * mlx_var->coef)
+		img_draw(mlx_var, imgmanip, (int)(W_BEGIN
+				+ (x * W_SPRITE * mlx_var->coef)
 				- (y * W_SPRITE * mlx_var->coef)),
 			(int)(H_BEGIN + (x * H_SPRITE * mlx_var->coef)
 				+ (y * H_SPRITE * mlx_var->coef))
@@ -57,6 +56,8 @@ void	put(t_mlx *mlx_var, t_imgmanip	imgmanip)
 		}
 		i++;
 	}
+	mlx_put_image_to_window(mlx_var->mlx, mlx_var->mlx_window,
+		mlx_var->imgmanip.img, 0, 0);
 }
 
 int	render_image(char *buffer, t_mlx *mlx_var)
@@ -66,7 +67,9 @@ int	render_image(char *buffer, t_mlx *mlx_var)
 	imgmanip.buffercasted = parse_into_map(buffer, mlx_var);
 	mlx_var->frees = imgmanip.buffercasted;
 	imgmanip.lenoutside = ft_strlenptr((t_end **)imgmanip.buffercasted);
-	if (!img_create(mlx_var, &imgmanip, WHITE))
+	if (!start_img(mlx_var, &imgmanip, find_wi(imgmanip.buffercasted,
+				&imgmanip, mlx_var),
+			find_he(imgmanip.buffercasted, &imgmanip, mlx_var)))
 		exit_routine(mlx_var);
 	mlx_var->imgmanip = imgmanip;
 	put(mlx_var, imgmanip);
@@ -74,30 +77,13 @@ int	render_image(char *buffer, t_mlx *mlx_var)
 	return (1);
 }
 
-int	img_create(t_mlx *mlx_var, t_imgmanip *imgmanip, int color)
+int	img_draw(t_mlx *mlx_var, t_imgmanip *imgmanip, int y, int x)
 {
-	int	times;
-
-	times = 2;
-	imgmanip->img = mlx_new_image(mlx_var->mlx, times, times);
-	if (!imgmanip->img)
-		return (0);
-	imgmanip->img_data = mlx_get_data_addr(imgmanip->img,
-			&imgmanip->bits_per_pixel,
-			&imgmanip->line_length, &imgmanip->endian);
-	while (mlx_var->x < times)
-	{
-		mlx_var->y = 0;
-		while (mlx_var->y < times)
-		{
-			imgmanip->img_data += (mlx_var->x * imgmanip->line_length
-					+ mlx_var->y * (imgmanip->bits_per_pixel / 8));
-			*((unsigned int *)imgmanip->img_data) = color;
-			imgmanip->img_data -= (mlx_var->x * imgmanip->line_length
-					+ mlx_var->y * (imgmanip->bits_per_pixel / 8));
-			mlx_var->y++;
-		}
-		mlx_var->x++;
-	}
+	(void) mlx_var;
+	imgmanip->img_data += (x * imgmanip->line_length
+			+ y * (imgmanip->bits_per_pixel / 8));
+	*((unsigned int *)imgmanip->img_data) = WHITE;
+	imgmanip->img_data -= (x * imgmanip->line_length
+			+ y * (imgmanip->bits_per_pixel / 8));
 	return (1);
 }

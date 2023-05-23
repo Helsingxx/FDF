@@ -6,7 +6,7 @@
 /*   By: eamrati <eamrati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 16:06:15 by eamrati           #+#    #+#             */
-/*   Updated: 2023/05/21 23:00:40 by eamrati          ###   ########.fr       */
+/*   Updated: 2023/05/23 16:25:18 by eamrati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,10 @@
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT	1080
 # define W_BEGIN 900
-# define H_BEGIN 300
-# define W_SPRITE 8
-# define H_SPRITE 4
+# define H_BEGIN 450
+# define W_SPRITE 4
+# define H_SPRITE 2
 # define WHITE 0x00FFFFFF
-# define BLACK 0x00000000
 
 typedef struct s_vars {
 	void	*mlx;
@@ -55,7 +54,7 @@ typedef struct s_imgmanip
 	int		leninside;
 	t_end	**buffercasted;
 	void	*img;
-	char	*img_data;	
+	char	*img_data;
 	int		endian;
 	int		bits_per_pixel;
 	int		line_length;
@@ -86,6 +85,10 @@ typedef struct s_mlx
 	int			x;
 	int			y;
 	int			horizon;
+	int			x_modif;
+	int			y_modif;
+	int			x_modif_max;
+	int			y_modif_max;
 }	t_mlx;
 
 typedef struct s_data
@@ -123,8 +126,8 @@ void		put_the_shit(t_mlx *mlx_var, t_imgmanip *imgmanip, int x, int y);
 void		put(t_mlx *mlx_var, t_imgmanip	imgmanip);
 int			zoom(int key, t_mlx *mlx_var);
 int			render_image(char *buffer, t_mlx *mlx_var);
-int			img_create(t_mlx *mlx_var, t_imgmanip *imgmanip, int color);
 void		*ft_split_struct(char *buffer, char c);
+int			img_draw(t_mlx *mlx_var, t_imgmanip *imgmanip, int x, int y);
 t_end		**parse_into_map(char	*buffer, t_mlx *mlx_var);
 void		traceline_anon(t_mlx *mlx_var, t_imgmanip *imgmanip, int x, int y);
 void		traceline_z(t_mlx *mlx_var, t_imgmanip *imgmanip, int x, int y);
@@ -135,5 +138,8 @@ void		backwards_free(t_end **map, int i);
 int			cond(int ecx, int steps);
 int			ft_strlenptr_x(t_end *vals);
 void		destroy_img(t_mlx *mlx_var);
+int			find_wi(t_end **buffer, t_imgmanip *imgmanip, t_mlx *mlx_var);
+int			find_he(t_end **buffer, t_imgmanip *imgmanip, t_mlx *mlx_var);
+int			start_img(t_mlx	*mlx_var, t_imgmanip *imgmanip, int x, int y);
 
 #endif

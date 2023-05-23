@@ -6,7 +6,7 @@
 /*   By: eamrati <eamrati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 19:59:30 by eamrati           #+#    #+#             */
-/*   Updated: 2023/05/21 19:59:31 by eamrati          ###   ########.fr       */
+/*   Updated: 2023/05/23 14:00:32 by eamrati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*ft_split_struct(char *buffer, char c)
 	int		j;
 	t_end	*res;
 
-	res = calloc(ft_strlen(buffer), sizeof(t_end));
+	res = ft_calloc(ft_strlen(buffer), sizeof(t_end));
 	a = 0;
 	j = 0;
 	while (buffer[a])

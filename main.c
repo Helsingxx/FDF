@@ -6,7 +6,7 @@
 /*   By: eamrati <eamrati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 16:18:45 by eamrati           #+#    #+#             */
-/*   Updated: 2023/05/23 14:15:16 by eamrati          ###   ########.fr       */
+/*   Updated: 2023/10/03 10:49:12 by eamrati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	generate_buffer(t_parse *p)
 		{
 			free(p->buffer);
 			free(p->ret);
+			close(p->fd);
 			exit(1);
 		}
 		p->buffer = p->temp;
@@ -78,10 +79,11 @@ char	*parse(char **argv)
 		ft_printf("Illegal file format.");
 		exit(1);
 	}
-	p.fd = open(argv[1], O_RDONLY);
+	p.fd = open(argv[1], O_RDONLY); // close fd
 	if (p.fd < 0)
 		exit (1);
 	generate_buffer(&p);
+	close(p.fd);
 	return (check_empty_num(p));
 }
 

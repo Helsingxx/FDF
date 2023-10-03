@@ -6,105 +6,11 @@
 /*   By: eamrati <eamrati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 19:59:50 by eamrati           #+#    #+#             */
-/*   Updated: 2023/05/23 16:19:39 by eamrati          ###   ########.fr       */
+/*   Updated: 2023/10/03 21:28:30 by eamrati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	tracelinex_calc(t_data *coords)
-{
-	if (coords->divx > coords->divy)
-	{
-		if (coords->x_diff % coords->divx == 0)
-			coords->y_diff--;
-		coords->x_diff--;
-	}
-	else if (coords->divx < coords->divy)
-	{
-		if (coords->y_diff % coords->divy == 0)
-			coords->x_diff--;
-		coords->y_diff--;
-	}
-	else
-	{
-		coords->x_diff--;
-		coords->y_diff--;
-	}
-}
-
-void	tracelinex(t_mlx *mlx_var, t_imgmanip *imgmanip, int x, int y)
-{
-	t_data	coords;
-
-	coords.x_diff = (int)(W_BEGIN + ((x + 1) * W_SPRITE * mlx_var->coef)
-			- (y * W_SPRITE * mlx_var->coef)) - (int)(W_BEGIN
-			+ (x * W_SPRITE * mlx_var->coef) - (y * W_SPRITE * mlx_var->coef));
-	coords.y_diff = (int)(H_BEGIN + ((x + 1) * H_SPRITE * mlx_var->coef)
-			+ (y * H_SPRITE * mlx_var->coef)) - (int)(H_BEGIN
-			+ (x * H_SPRITE * mlx_var->coef) + (y * H_SPRITE * mlx_var->coef));
-	coords.divx = coords.x_diff / coords.y_diff;
-	coords.divy = coords.y_diff / coords.x_diff;
-	while (coords.x_diff > 0 || coords.y_diff > 0)
-	{
-		img_draw(mlx_var, imgmanip, (int)(W_BEGIN
-				+ (x * W_SPRITE * mlx_var->coef)
-				- (y * W_SPRITE * mlx_var->coef)) + coords.x_diff,
-			(int)(H_BEGIN + (x * H_SPRITE * mlx_var->coef)
-				+ (y * H_SPRITE * mlx_var->coef)) + coords.y_diff);
-		tracelinex_calc(&coords);
-	}
-}
-
-void	traceliney_calc(t_data *coords)
-{
-	if (coords->divx > coords->divy)
-	{
-		if (coords->xcount % coords->divx == 0)
-			coords->ycount--;
-		coords->xcount++;
-	}
-	else if (coords->divx < coords->divy)
-	{
-		if (-(coords->ycount) % coords->divy == 0)
-			coords->xcount++;
-		coords->ycount--;
-	}
-	else
-	{	
-		coords->xcount++;
-		coords->ycount--;
-	}
-	coords->counter++;
-}
-
-void	traceliney(t_mlx *mlx_var, t_imgmanip *imgmanip, int x, int y)
-{
-	t_data	coords;
-
-	coords.counter = 0;
-	coords.x_diff = (int)(W_BEGIN + (x * W_SPRITE * mlx_var->coef)
-			- (y * W_SPRITE * mlx_var->coef))
-		- (int)(W_BEGIN + (x * W_SPRITE * mlx_var->coef)
-			- ((y + 1) * W_SPRITE * mlx_var->coef));
-	coords.y_diff = (int)(H_BEGIN + (x * H_SPRITE * mlx_var->coef)
-			+ (y * H_SPRITE * mlx_var->coef))
-		- (int)(H_BEGIN + (x * H_SPRITE * mlx_var->coef)
-			+ ((y + 1) * H_SPRITE * mlx_var->coef));
-	coords.xcount = 0;
-	coords.ycount = 0;
-	coords.divx = -(coords.x_diff / coords.y_diff);
-	coords.divy = -(coords.y_diff / coords.x_diff);
-	while (coords.xcount < coords.x_diff || coords.ycount > coords.y_diff)
-	{
-		img_draw(mlx_var, imgmanip, (int)(W_BEGIN
-				+ (x * W_SPRITE * mlx_var->coef)
-				- ((y + 1) * W_SPRITE * mlx_var->coef)) + coords.xcount,
-			(int)(H_BEGIN + (x * H_SPRITE * mlx_var->coef)
-				+ ((y + 1) * H_SPRITE * mlx_var->coef)) + coords.ycount);
-		traceliney_calc(&coords);
-	}
-}
 
 void	trace_it(t_mlx *mlx_var, t_imgmanip *imgmanip, float x, float y)
 {

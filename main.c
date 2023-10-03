@@ -6,7 +6,7 @@
 /*   By: eamrati <eamrati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 16:18:45 by eamrati           #+#    #+#             */
-/*   Updated: 2023/10/03 10:49:12 by eamrati          ###   ########.fr       */
+/*   Updated: 2023/10/03 21:26:38 by eamrati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,12 @@ char	*parse(char **argv)
 		ft_printf("Illegal file format.");
 		exit(1);
 	}
-	p.fd = open(argv[1], O_RDONLY); // close fd
+	p.fd = open(argv[1], O_RDONLY);
 	if (p.fd < 0)
+	{
+		ft_printf("Error opening file.");
 		exit (1);
+	}
 	generate_buffer(&p);
 	close(p.fd);
 	return (check_empty_num(p));
@@ -91,7 +94,11 @@ int	main(int argc, char **argv)
 {
 	char	*buffer;
 
-	(void) argc;
+	if (argc != 2)
+	{
+		ft_printf("Incorrect number of arguments.");
+		exit(1);
+	}
 	buffer = parse(argv);
 	mlx_startup(buffer);
 	return (0);

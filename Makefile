@@ -1,9 +1,9 @@
 NAME := fdf
 LIB := printf/ft_printf.h get_next_line.h fdf.h
 CFILES := end.c fdf_utils.c ft_atoi.c ft_bzero.c ft_split.c ft_strjointwo.c ft_strlcpy.c ft_strnstr.c get_next_line.c \
-			get_next_line_utils.c fdf.c put_image.c render_image.c traces.c find_max.c main.c
+			get_next_line_utils.c fdf.c put_image.c render_image.c traces.c main.c
 OFILES := $(CFILES:%.c=%.o)
-CFLAGS := -Wall -Wextra -Werror -lmlx -framework OpenGL -framework AppKit -I printf -fsanitize=address -g
+CFLAGS := -Wall -Wextra -Werror -lmlx -framework OpenGL -framework AppKit -I printf
 CC := cc
 PRINTF := printf/libftprintf.a
 all: $(NAME)

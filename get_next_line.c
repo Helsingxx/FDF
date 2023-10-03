@@ -6,7 +6,7 @@
 /*   By: eamrati <eamrati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 23:26:40 by eamrati           #+#    #+#             */
-/*   Updated: 2023/05/21 16:13:36 by eamrati          ###   ########.fr       */
+/*   Updated: 2023/10/03 21:26:09 by eamrati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*reallign(char **buffer, t_tools *tools, int fd)
 }
 
 char	*get_next_line(int fd, t_tools	tools)
-{	
+{
 	static char	*buffer[OPEN_MAX];
 
 	if (fd >= OPEN_MAX || fd < 0)

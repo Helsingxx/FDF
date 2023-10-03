@@ -6,7 +6,7 @@
 /*   By: eamrati <eamrati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 19:30:33 by eamrati           #+#    #+#             */
-/*   Updated: 2023/05/21 19:30:35 by eamrati          ###   ########.fr       */
+/*   Updated: 2023/10/03 21:23:53 by eamrati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,4 @@ void	backwards_free(t_end **map, int i)
 		i--;
 	}
 	free(map);
-}
-
-int	cond(int ecx, int steps)
-{
-	if (steps < 0)
-		return (ecx >= steps);
-	else
-		return (ecx <= steps);
-}
-
-int	ft_strlenptr_x(t_end *vals)
-{
-	int	a;
-
-	a = 0;
-	while (!vals[a].endor0)
-		a++;
-	return (a);
 }
